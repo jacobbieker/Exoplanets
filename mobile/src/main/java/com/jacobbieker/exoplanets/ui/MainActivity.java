@@ -34,7 +34,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
 
 
-        String gitHubURL = "https://github.com/OpenExoplanetCatalogue/oec_gzip.git";
+        String gitHubURL = "https://github.com/OpenExoplanetCatalogue/oec_gzip.git";//Change if URL changes to download thing
         //Start Service using Intent
         //TODO Make Sure This Is Right
         Log.i("GitHubService", "Intent About to be Passed");

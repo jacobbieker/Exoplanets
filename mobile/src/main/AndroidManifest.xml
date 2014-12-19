@@ -29,11 +29,9 @@
                 android:value="com.jacobbieker.exoplanets.ui.MainActivity" />
         </activity>
 
-    <service
-        android:name="com.jacobbieker.exoplanets.database.GitHub_Service"
-        android:enabled="true"
-        android:exported="true" >
-    </service>
+        <service
+            android:name=".database.GitHub_Service"
+            android:exported="false"/>
 
         <meta-data android:name="DATABASE" android:value="exoplanets.db" />
         <meta-data android:name="VERSION" android:value="2" />

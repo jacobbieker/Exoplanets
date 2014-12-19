@@ -1,48 +1,71 @@
 package com.jacobbieker.exoplanets.database;
 
-import android.app.Service;
+import android.app.IntentService;
 import android.content.Intent;
-import android.os.IBinder;
-import android.util.Log;
 
-import org.eclipse.egit.github.core.Repository;
+import com.jacobbieker.exoplanets.xml.DatabaseStrings;
+
 import org.eclipse.egit.github.core.client.GitHubClient;
-import org.eclipse.egit.github.core.service.RepositoryService;
+import org.xml.sax.InputSource;
 
+import java.io.BufferedInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.BufferOverflowException;
+import java.util.zip.GZIPInputStream;
 
-public class GitHub_Service extends Service {
+
+public class GitHub_Service extends IntentService {
     private final String TAG = "Github Service";
     private String mRepositoryName = "open_exoplanet_catalogue";
     private String mOrganizationName = "OpenExoplanetCatalogue";
     private String mRepositoryNameGzip = "oec_gzip";
 
-    public GitHub_Service() {
+    /**
+     * Creates an IntentService.  Invoked by your subclass's constructor.
+     *
+     * @param name Used to name the worker thread, important only for debugging.
+     */
+    public GitHub_Service(String name) {
+        super(name);
     }
 
-    @Override
-    public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
 
     @Override
-    public void onCreate() {
+    protected void onHandleIntent(Intent intent) {
+        String urlString = intent.getStringExtra("URL1");
         GitHubClient client = new GitHubClient();
-        RepositoryService repositoryService = new RepositoryService();
         try {
-            for (Repository repository : repositoryService.getRepositories(mOrganizationName)) {
-                Log.i(TAG, repository.getName());
+            URL url = new URL(urlString);
+            URLConnection connection = url.openConnection();
+            InputStream stream = connection.getInputStream();
+            stream = new GZIPInputStream(stream);
+            InputSource is = new InputSource(stream);
+            InputStream input = new BufferedInputStream(is.getByteStream());
+            OutputStream output = new FileOutputStream(DatabaseStrings.ASSETS_SYSTEMS_XML);
+            byte data[] = new byte[2097152];
+            long total = 0;
+            int count;
+
+            while ((count = input.read(data)) != -1) {
+                total += count;
+                output.write(data, 0, count);
             }
+
+            output.flush();
+            output.close();
+            input.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-    }
 
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        return Service.START_NOT_STICKY;
     }
 
 
