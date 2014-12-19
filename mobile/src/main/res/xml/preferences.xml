@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <ListPreference
+        android:key="pref_app_theme"
+        android:defaultValue="@string/app_theme_dark_actionbar"
+        android:entries="@array/app_theme_choices"
+        android:entryValues="@array/app_theme_values"
+        android:title="@string/theme"
+        />
+
+
+</PreferenceScreen>
