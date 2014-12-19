@@ -31,7 +31,9 @@ import android.util.Log;
 import com.jacobbieker.exoplanets.xml.DatabaseStrings;
 import com.jacobbieker.exoplanets.xml.DatabaseXMLparser;
 
+import org.eclipse.egit.github.core.Repository;
 import org.eclipse.egit.github.core.client.GitHubClient;
+import org.eclipse.egit.github.core.service.RepositoryService;
 import org.xml.sax.InputSource;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -72,13 +74,12 @@ public class GitHub_Service extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if ((new File(DatabaseStrings.ASSETS_SYSTEMS_XML).exists())) {
+        /*if ((new File(DatabaseStrings.ASSETS_SYSTEMS_XML).exists())) {
             File f = new File(DatabaseStrings.ASSETS_SYSTEMS_XML);
             f.delete();
             Log.i(TAG, "File removed");
-        }
+        }*/
         String urlString = intent.getStringExtra("URL1");
-        //GitHubClient client = new GitHubClient();
         try {
             URL url = new URL(urlString);
             URLConnection connection = url.openConnection();
@@ -86,7 +87,7 @@ public class GitHub_Service extends IntentService {
             stream = new GZIPInputStream(stream);
             InputSource is = new InputSource(stream);
             InputStream input = new BufferedInputStream(is.getByteStream());
-            OutputStream output = new FileOutputStream(DatabaseStrings.ASSETS_SYSTEMS_XML);
+            OutputStream output = new FileOutputStream(DatabaseStrings.ASSETS_SYSTEMS_XML);//TODO Make it avtually fine the file
             byte data[] = new byte[2097152];
             long total = 0;
             int count;
@@ -103,7 +104,7 @@ public class GitHub_Service extends IntentService {
             e.printStackTrace();
         }
         try {
-            FileInputStream fileInputStream = new FileInputStream(new File(DatabaseStrings.ASSETS_SYSTEMS_XML));//Takes outputted file from previous try/catch
+            FileInputStream fileInputStream = new FileInputStream(new File(DatabaseStrings.ASSETS_SYSTEMS_XML));//Takes outputted file from previous try/catch TODO Make it actually find the file
             DatabaseXMLparser databaseXMLparser = new DatabaseXMLparser();
             databaseXMLparser.parse(fileInputStream);//parses new file into database
             Log.i(TAG, "Intent Service Done");
@@ -116,5 +117,14 @@ public class GitHub_Service extends IntentService {
         }
     }
 
+    private void connectToRepo(String organizationName, String repositoryName) throws IOException {
+        //GitHubClient client = new GitHubClient();//Authenticate?
+        RepositoryService service = new RepositoryService();
+        for (Repository repository : service.getOrgRepositories(organizationName)) {
+            if (repository.getName().equalsIgnoreCase(repositoryName)) {
+                //TODO Download folder in repo, or file in repo to assets/ folder
+            }
+        }
+    }
 
 }
