@@ -20,6 +20,21 @@
 
         </activity>
 
+        <activity
+            android:name="com.jacobbieker.exoplanets.settings.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName="com.jacobbieker.exoplanets.ui.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jacobbieker.exoplanets.ui.MainActivity" />
+        </activity>
+
+    <service
+        android:name="com.jacobbieker.exoplanets.database.GitHub_Service"
+        android:enabled="true"
+        android:exported="true" >
+    </service>
+
         <meta-data android:name="DATABASE" android:value="exoplanets.db" />
         <meta-data android:name="VERSION" android:value="2" />
         <meta-data android:name="QUERY_LOG" android:value="true" />

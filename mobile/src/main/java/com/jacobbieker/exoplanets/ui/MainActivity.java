@@ -34,7 +34,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
 
 
-        /*String gitHubURL = "https://github.com/OpenExoplanetCatalogue/oec_gzip.git";
+        String gitHubURL = "https://github.com/OpenExoplanetCatalogue/oec_gzip.git";
         //Start Service using Intent
         //TODO Make Sure This Is Right
         Log.i("GitHubService", "Intent About to be Passed");
@@ -42,14 +42,14 @@ public class MainActivity extends Activity {
         gitHubDownload.putExtra("URL1", gitHubURL);
         getBaseContext().startService(gitHubDownload);
         Log.i("GitHubService", "Intent About Passed");
-        */
+
 
         //Adding GitHubHeadless Fragment
-        FragmentTransaction fT = getFragmentManager().beginTransaction();
+       /* FragmentTransaction fT = getFragmentManager().beginTransaction();
         fT.add(new GitHubHeadless(), "GitHubHeadless");
-        //getFragmentManager().findFragmentByTag("GitHubHeadless").setRetainInstance(true);
+        getFragmentManager().findFragmentByTag("GitHubHeadless").setRetainInstance(true);
         fT.commit();
-        Log.i("GitHubHeadless", "Headless Fragment Added Successfully");
+        Log.i("GitHubHeadless", "Headless Fragment Added Successfully");*/
 
         if (findViewById(R.id.first_container) != null && findViewById(R.id.second_container) != null) {
             if (savedInstanceState == null) {

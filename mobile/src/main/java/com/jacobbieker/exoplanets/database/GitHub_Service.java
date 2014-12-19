@@ -31,7 +31,7 @@ public class GitHub_Service extends Service {
         GitHubClient client = new GitHubClient();
         RepositoryService repositoryService = new RepositoryService();
         try {
-            for (Repository repository : repositoryService.getRepositories("OpenExoplanetCatalogue")) {
+            for (Repository repository : repositoryService.getRepositories(mOrganizationName)) {
                 Log.i(TAG, repository.getName());
             }
         } catch (IOException e) {

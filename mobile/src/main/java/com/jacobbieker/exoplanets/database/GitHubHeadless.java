@@ -9,10 +9,6 @@ import android.util.Log;
 
 import com.jacobbieker.exoplanets.xml.DatabaseStrings;
 
-import org.kohsuke.github.GHContent;
-import org.kohsuke.github.GHOrganization;
-import org.kohsuke.github.GHRepository;
-import org.kohsuke.github.GitHub;
 import org.xml.sax.InputSource;
 
 import java.io.BufferedInputStream;
@@ -47,30 +43,10 @@ public class GitHubHeadless extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         EventBus.getDefault().register(this);
         super.onCreate(savedInstanceState);
-        try {
-            connectToRepository(mOrganizationName, mRepositoryName);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         setRetainInstance(true);
     }
 
-    public void connectToRepository(String organizationName, String repositoryName) throws IOException {
-        GitHub gitHub = GitHub.connectAnonymously();
-        GHRepository repository = gitHub.getOrganization(organizationName).getRepository(repositoryName);
-        List<GHContent> directory = repository.getDirectoryContent("systems");
-        for (int i = 0; i < directory.size(); i++) {
-            Log.i(TAG, directory.get(i).getName());
-            if (directory.get(i).isFile()) {
-                directory.get(i).getContent();
-            }
-        }
-    }
-
-    private void connectToDatabase() {
-
-    }
 
 
     private class DownloadDatabaseTask extends AsyncTask<String, Void, String> {
