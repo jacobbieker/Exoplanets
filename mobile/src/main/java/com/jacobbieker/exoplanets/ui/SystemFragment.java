@@ -17,9 +17,9 @@ import android.widget.Toast;
 
 import com.jacobbieker.exoplanets.database.DatabaseHelper;
 import com.jacobbieker.exoplanets.database.SystemDataSource;
+import com.jacobbieker.exoplanets.R;
 import com.jacobbieker.exoplanets.eventbus.ItemSelected;
 import com.jacobbieker.exoplanets.eventbus.ItemSelectedEvent;
-import com.jacobbieker.exoplanets.R;
 
 import java.util.ArrayList;
 
