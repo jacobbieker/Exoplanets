@@ -2,6 +2,7 @@ package com.jacobbieker.exoplanets.database;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.util.Log;
 
 import com.jacobbieker.exoplanets.xml.DatabaseStrings;
 import com.jacobbieker.exoplanets.xml.DatabaseXMLparser;
@@ -46,9 +47,10 @@ public class GitHub_Service extends IntentService {
         if ((new File(DatabaseStrings.ASSETS_SYSTEMS_XML).exists())) {
             File f = new File(DatabaseStrings.ASSETS_SYSTEMS_XML);
             f.delete();
+            Log.i(TAG, "File removed");
         }
         String urlString = intent.getStringExtra("URL1");
-        GitHubClient client = new GitHubClient();
+        //GitHubClient client = new GitHubClient();
         try {
             URL url = new URL(urlString);
             URLConnection connection = url.openConnection();
@@ -73,9 +75,9 @@ public class GitHub_Service extends IntentService {
             e.printStackTrace();
         }
         try {
-            FileInputStream fileInputStream = new FileInputStream(new File(DatabaseStrings.ASSETS_SYSTEMS_XML));
+            FileInputStream fileInputStream = new FileInputStream(new File(DatabaseStrings.ASSETS_SYSTEMS_XML));//Takes outputted file from previous try/catch
             DatabaseXMLparser databaseXMLparser = new DatabaseXMLparser();
-            databaseXMLparser.parse(fileInputStream);
+            databaseXMLparser.parse(fileInputStream);//parses new file into database
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (XmlPullParserException e) {
