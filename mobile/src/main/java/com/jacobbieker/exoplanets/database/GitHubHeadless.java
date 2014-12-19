@@ -27,6 +27,8 @@ import de.greenrobot.event.EventBus;
  *
  */
 public class GitHubHeadless extends Fragment {
+    private String mRepositoryName = "open_exoplanet_catalogue";
+    private String mOrginizationName = "OpenExoplanetCatalogue";
 
 
     public GitHubHeadless() {
