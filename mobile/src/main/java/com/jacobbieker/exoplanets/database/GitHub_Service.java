@@ -41,6 +41,10 @@ public class GitHub_Service extends IntentService {
         super(name);
     }
 
+    public GitHub_Service() {
+        super("GitHub_Service");
+    }
+
 
     @Override
     protected void onHandleIntent(Intent intent) {
