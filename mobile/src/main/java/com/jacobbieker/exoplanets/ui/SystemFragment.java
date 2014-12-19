@@ -1,3 +1,27 @@
+/*
+ * The MIT License (MIT)
+ *
+ * Copyright (c) $year. Jacob Bieker
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 package com.jacobbieker.exoplanets.ui;
 
 import android.app.Activity;
@@ -53,10 +77,9 @@ public class SystemFragment extends ListFragment implements OnItemClickListener 
 
     @Override
     public void onItemClick(AdapterView<?> adapter, View arg1, int position, long arg3) {
-        // TODO Auto-generated method stub
         String item = adapter.getItemAtPosition(position).toString();
         Log.i("OnItemClick", "String Item found:" + position);
-        Toast.makeText(getActivity().getApplicationContext(), "Click Item Position: " + item, Toast.LENGTH_LONG);
+        Toast.makeText(getActivity().getApplicationContext(), "Click Item Position: " + item, Toast.LENGTH_LONG).show();
         Log.i("OnItemClick", "Toast Called: " + item);
         EventBus.getDefault().post(new ItemSelectedEvent(new ItemSelected(arg3)));
 
@@ -78,8 +101,9 @@ public class SystemFragment extends ListFragment implements OnItemClickListener 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         newDB = databaseHelper.getWritableDatabase();
+        //TODO Make sure database exists before calling openAndViewDatabase
         //Log.i("SystemFragment", "openAndViewDatabase called");
-        openAndViewDatabase();
+        //openAndViewDatabase();
         //Log.i("SystemFragment", "displayResultList Called");
         displayResultList();
         ListView listView = (ListView)getListView().findViewById(android.R.id.list);
