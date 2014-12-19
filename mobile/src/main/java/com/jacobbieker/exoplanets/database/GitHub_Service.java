@@ -4,11 +4,15 @@ import android.app.IntentService;
 import android.content.Intent;
 
 import com.jacobbieker.exoplanets.xml.DatabaseStrings;
+import com.jacobbieker.exoplanets.xml.DatabaseXMLparser;
 
 import org.eclipse.egit.github.core.client.GitHubClient;
 import org.xml.sax.InputSource;
+import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -39,6 +43,10 @@ public class GitHub_Service extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        if ((new File(DatabaseStrings.ASSETS_SYSTEMS_XML).exists())) {
+            File f = new File(DatabaseStrings.ASSETS_SYSTEMS_XML);
+            f.delete();
+        }
         String urlString = intent.getStringExtra("URL1");
         GitHubClient client = new GitHubClient();
         try {
@@ -64,8 +72,17 @@ public class GitHub_Service extends IntentService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
+        try {
+            FileInputStream fileInputStream = new FileInputStream(new File(DatabaseStrings.ASSETS_SYSTEMS_XML));
+            DatabaseXMLparser databaseXMLparser = new DatabaseXMLparser();
+            databaseXMLparser.parse(fileInputStream);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
