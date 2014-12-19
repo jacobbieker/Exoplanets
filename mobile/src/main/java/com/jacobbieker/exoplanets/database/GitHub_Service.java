@@ -3,8 +3,20 @@ package com.jacobbieker.exoplanets.database;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.util.Log;
+
+import org.eclipse.egit.github.core.Repository;
+import org.eclipse.egit.github.core.client.GitHubClient;
+import org.eclipse.egit.github.core.service.RepositoryService;
+
+import java.io.IOException;
 
 public class GitHub_Service extends Service {
+    private final String TAG = "Github Service";
+    private String mRepositoryName = "open_exoplanet_catalogue";
+    private String mOrganizationName = "OpenExoplanetCatalogue";
+    private String mRepositoryNameGzip = "oec_gzip";
+
     public GitHub_Service() {
     }
 
@@ -16,6 +28,15 @@ public class GitHub_Service extends Service {
 
     @Override
     public void onCreate() {
+        GitHubClient client = new GitHubClient();
+        RepositoryService repositoryService = new RepositoryService();
+        try {
+            for (Repository repository : repositoryService.getRepositories("OpenExoplanetCatalogue")) {
+                Log.i(TAG, repository.getName());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

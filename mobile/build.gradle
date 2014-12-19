@@ -34,4 +34,5 @@ dependencies {
     compile 'org.mockito:mockito-all:1.10.17'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.1.0'
     compile 'org.kohsuke:github-api:1.59'
+    compile 'org.eclipse.mylyn.github:org.eclipse.egit.github.core:2.1.5'
 }
