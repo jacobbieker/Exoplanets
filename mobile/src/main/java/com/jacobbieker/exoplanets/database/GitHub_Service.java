@@ -82,6 +82,7 @@ public class GitHub_Service extends IntentService {
             FileInputStream fileInputStream = new FileInputStream(new File(DatabaseStrings.ASSETS_SYSTEMS_XML));//Takes outputted file from previous try/catch
             DatabaseXMLparser databaseXMLparser = new DatabaseXMLparser();
             databaseXMLparser.parse(fileInputStream);//parses new file into database
+            Log.i(TAG, "Intent Service Done");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (XmlPullParserException e) {
