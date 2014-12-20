@@ -25,6 +25,7 @@
 package com.jacobbieker.exoplanets.database;
 
 import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
@@ -49,6 +50,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.BufferOverflowException;
+import java.util.Date;
 import java.util.zip.GZIPInputStream;
 
 
@@ -57,6 +59,9 @@ public class GitHub_Service extends IntentService {
     private String mRepositoryName = "open_exoplanet_catalogue";
     private String mOrganizationName = "OpenExoplanetCatalogue";
     private String mRepositoryNameGzip = "oec_gzip";
+    private String FILENAME = "systems";
+    private Date mLastUpdate;
+    private Date mCurrentUpdate;
 
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
@@ -79,40 +84,49 @@ public class GitHub_Service extends IntentService {
             f.delete();
             Log.i(TAG, "File removed");
         }*/
-        String urlString = intent.getStringExtra("URL1");
         try {
-            URL url = new URL(urlString);
-            URLConnection connection = url.openConnection();
-            InputStream stream = connection.getInputStream();
-            stream = new GZIPInputStream(stream);
-            InputSource is = new InputSource(stream);
-            InputStream input = new BufferedInputStream(is.getByteStream());
-            FileOutputStream output = new FileOutputStream(DatabaseStrings.ASSETS_SYSTEMS_XML);//TODO Make it actually fine the file
-            byte data[] = new byte[2097152];
-            long total = 0;
-            int count;
+            if (checkUpdateTime()) {
+                try {
+                    String urlString = intent.getStringExtra("URL1");
+                    URL url = new URL(urlString);
+                    URLConnection connection = url.openConnection();
+                    InputStream stream = connection.getInputStream();
+                    stream = new GZIPInputStream(stream);
+                    InputSource is = new InputSource(stream);
+                    InputStream input = new BufferedInputStream(is.getByteStream());
+                    //FileOutputStream output = new FileOutputStream(DatabaseStrings.ASSETS_SYSTEMS_XML);//TODO Make it actually fine the file
+                    FileOutputStream output = openFileOutput(FILENAME, Context.MODE_PRIVATE);
+                    byte data[] = new byte[2097152];
+                    long total = 0;
+                    int count;
 
-            while ((count = input.read(data)) != -1) {
-                total += count;
-                output.write(data, 0, count);
+                    while ((count = input.read(data)) != -1) {
+                        total += count;
+                        output.write(data, 0, count);
+                    }
+
+                    output.flush();
+                    output.close();
+                    input.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    FileInputStream inputStream = openFileInput(FILENAME);
+                    //FileInputStream fileInputStream = new FileInputStream(new File(DatabaseStrings.ASSETS_SYSTEMS_XML));//Takes outputted file from previous try/catch TODO Make it actually find the file
+                    DatabaseXMLparser databaseXMLparser = new DatabaseXMLparser();
+                    databaseXMLparser.parse(inputStream);//parses new file into database
+                    Log.i(TAG, "Intent Service Done");
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (XmlPullParserException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-
-            output.flush();
-            output.close();
-            input.close();
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            FileInputStream fileInputStream = new FileInputStream(new File(DatabaseStrings.ASSETS_SYSTEMS_XML));//Takes outputted file from previous try/catch TODO Make it actually find the file
-            DatabaseXMLparser databaseXMLparser = new DatabaseXMLparser();
-            databaseXMLparser.parse(fileInputStream);//parses new file into database
-            Log.i(TAG, "Intent Service Done");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (XmlPullParserException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+            Log.e(TAG, "checkUpdate failed");
             e.printStackTrace();
         }
     }
@@ -122,8 +136,17 @@ public class GitHub_Service extends IntentService {
         RepositoryService service = new RepositoryService();
         for (Repository repository : service.getOrgRepositories(organizationName)) {
             if (repository.getName().equalsIgnoreCase(repositoryName)) {
-                //TODO Download folder in repo, or file in repo to assets/ folder
+                mCurrentUpdate = repository.getUpdatedAt();
             }
+        }
+    }
+
+    private boolean checkUpdateTime() throws IOException {
+        connectToRepo(mOrganizationName, mRepositoryNameGzip);
+        if (mCurrentUpdate.after(mLastUpdate)) {
+            return true;
+        } else {
+            return false;
         }
     }
 
