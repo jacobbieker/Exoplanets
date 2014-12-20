@@ -117,6 +117,7 @@ public class GitHub_Service extends IntentService {
                     //FileInputStream fileInputStream = new FileInputStream(new File(DatabaseStrings.ASSETS_SYSTEMS_XML));//Takes outputted file from previous try/catch TODO Make it actually find the file
                     DatabaseXMLparser databaseXMLparser = new DatabaseXMLparser();
                     databaseXMLparser.parse(inputStream);//parses new file into database
+                    inputStream.close();
                     Log.i(TAG, "Intent Service Done");
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
