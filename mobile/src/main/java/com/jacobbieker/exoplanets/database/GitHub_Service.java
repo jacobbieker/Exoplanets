@@ -87,7 +87,7 @@ public class GitHub_Service extends IntentService {
             stream = new GZIPInputStream(stream);
             InputSource is = new InputSource(stream);
             InputStream input = new BufferedInputStream(is.getByteStream());
-            OutputStream output = new FileOutputStream(DatabaseStrings.ASSETS_SYSTEMS_XML);//TODO Make it avtually fine the file
+            FileOutputStream output = new FileOutputStream(DatabaseStrings.ASSETS_SYSTEMS_XML);//TODO Make it actually fine the file
             byte data[] = new byte[2097152];
             long total = 0;
             int count;
