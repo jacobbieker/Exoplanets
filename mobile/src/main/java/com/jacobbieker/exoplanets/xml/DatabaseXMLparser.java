@@ -56,7 +56,7 @@ public class DatabaseXMLparser {
     private static final String DISTANCE = "distance";
     private static final String STAR = "star";
     private static final String PLANET = "planet";
-    File databaseXML = new File(DatabaseStrings.ASSETS_SYSTEMS_XML);
+    //File databaseXML = new File(DatabaseStrings.ASSETS_SYSTEMS_XML);
     private Context context;
 
     public List parse(InputStream is) throws XmlPullParserException, IOException {

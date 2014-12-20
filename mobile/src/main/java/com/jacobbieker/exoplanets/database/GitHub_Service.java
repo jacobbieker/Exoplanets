@@ -96,6 +96,7 @@ public class GitHub_Service extends IntentService {
                     InputStream input = new BufferedInputStream(is.getByteStream());
                     //FileOutputStream output = new FileOutputStream(DatabaseStrings.ASSETS_SYSTEMS_XML);//TODO Make it actually fine the file
                     FileOutputStream output = openFileOutput(FILENAME, Context.MODE_PRIVATE);
+                    Log.i(TAG, "File created at:" + getFilesDir());
                     byte data[] = new byte[2097152];
                     long total = 0;
                     int count;
