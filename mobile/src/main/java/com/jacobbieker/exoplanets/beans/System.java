@@ -43,7 +43,6 @@ public class System extends SugarRecord<System> {
 
     /**
      *
-     * @param id The id used to find the system in the SQLite table
      * @param systemName The name of the system
      * @param rightAscension The right ascension of the system with respect to Earth
      * @param declination The declination of the system with respect to Earth

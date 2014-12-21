@@ -82,19 +82,6 @@ public class Planet extends SugarRecord<Planet> {
     }
 
     public Planet() {
-        this.context = context;
-        this.system = null;
-        this.star = null;
-        this.planetName = null;
-        this.listStatus = null;
-        this.planetMass = null;
-        this.planetPeriod = null;
-        this.planetSemiMajorAxis = null;
-        this.planetEccentricity = null;
-        this.planetDiscoveryMethod = null;
-        this.planetLastUpdate = null;
-        this.planetDiscoveryYear = null;
-        this.planetTemp = null;
 
     }
 

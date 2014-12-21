@@ -29,10 +29,6 @@
                 android:value="com.jacobbieker.exoplanets.ui.MainActivity" />
         </activity>
 
-        <service
-            android:name=".database.GitHub_Service"
-            android:exported="false"/>
-
         <service android:name=".xml.JsonPullerService"
                  android:exported="false" />
 

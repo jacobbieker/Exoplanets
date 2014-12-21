@@ -81,19 +81,7 @@ public class Star extends SugarRecord<Star> {
     }
 
     public Star() {
-        this.context = null;
-        this.system = null;
-        this.starName = null;
-        this.starMass = null;
-        this.starRadius = null;
-        this.starMagV = null;
-        this.starMagB = null;
-        this.starMagJ = null;
-        this.starMagH = null;
-        this.starMagK = null;
-        this.starMetallicity = null;
-        this.starSpectralType = null;
-        this.starTemp = null;
+
     }
 	   /*
 	    * Star Getters and Setters
