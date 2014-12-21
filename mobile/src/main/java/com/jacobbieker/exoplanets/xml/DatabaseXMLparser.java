@@ -28,14 +28,11 @@ import android.content.Context;
 
 import com.jacobbieker.exoplanets.beans.*;
 import com.jacobbieker.exoplanets.beans.System;
-import com.orm.Database;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
