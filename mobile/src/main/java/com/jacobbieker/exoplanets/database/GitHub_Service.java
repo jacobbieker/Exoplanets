@@ -34,6 +34,7 @@ import com.jacobbieker.exoplanets.xml.DatabaseXMLparser;
 
 import org.eclipse.egit.github.core.Repository;
 import org.eclipse.egit.github.core.client.GitHubClient;
+import org.eclipse.egit.github.core.service.GitHubService;
 import org.eclipse.egit.github.core.service.RepositoryService;
 import org.xml.sax.InputSource;
 import org.xmlpull.v1.XmlPullParserException;
@@ -45,6 +46,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -59,8 +61,8 @@ public class GitHub_Service extends IntentService {
     private String mRepositoryName = "open_exoplanet_catalogue";
     private String mOrganizationName = "OpenExoplanetCatalogue";
     private String mRepositoryNameGzip = "oec_gzip";
-    private String FILENAME = "systems";
-    private Date mLastUpdate;
+    private String FILENAME = "systems.xml";
+    private Date mLastUpdate = new Date(Long.MIN_VALUE);
     private Date mCurrentUpdate;
 
     /**
@@ -97,7 +99,7 @@ public class GitHub_Service extends IntentService {
                     //FileOutputStream output = new FileOutputStream(DatabaseStrings.ASSETS_SYSTEMS_XML);//TODO Make it actually fine the file
                     FileOutputStream output = openFileOutput(FILENAME, Context.MODE_PRIVATE);
                     Log.i(TAG, "File created at:" + getFilesDir());
-                    byte data[] = new byte[2097152];
+                    byte data[] = new byte[10971520];
                     long total = 0;
                     int count;
 
@@ -113,11 +115,14 @@ public class GitHub_Service extends IntentService {
                     e.printStackTrace();
                 }
                 try {
-                    FileInputStream inputStream = openFileInput(FILENAME);
+                    File file = new File(getFilesDir(), FILENAME);
+                    FileInputStream inputStream = new FileInputStream(file);
+                    //FileInputStream inputStream = openFileInput(FILENAME);
                     //FileInputStream fileInputStream = new FileInputStream(new File(DatabaseStrings.ASSETS_SYSTEMS_XML));//Takes outputted file from previous try/catch TODO Make it actually find the file
                     DatabaseXMLparser databaseXMLparser = new DatabaseXMLparser();
-                    databaseXMLparser.parse(inputStream);//parses new file into database
+                    databaseXMLparser.parse(inputStream);//parses new file into database TODO NullPointerException
                     inputStream.close();
+                    mLastUpdate = mCurrentUpdate;//Sets the last update to the current update, so it works for next time
                     Log.i(TAG, "Intent Service Done");
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
@@ -143,13 +148,14 @@ public class GitHub_Service extends IntentService {
         }
     }
 
+    /**
+     *
+     * @return true if the last update on the repo is more recent than the last time the file was downlaoded
+     * @throws IOException
+     */
     private boolean checkUpdateTime() throws IOException {
         connectToRepo(mOrganizationName, mRepositoryNameGzip);
-        if (mCurrentUpdate.after(mLastUpdate)) {
-            return true;
-        } else {
-            return false;
-        }
+        return mCurrentUpdate.after(mLastUpdate);//TODO Something wrong with this: NullPointerException
     }
 
 }
