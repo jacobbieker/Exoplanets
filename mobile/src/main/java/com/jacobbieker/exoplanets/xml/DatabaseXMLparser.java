@@ -28,7 +28,6 @@ import android.content.Context;
 
 import com.jacobbieker.exoplanets.beans.*;
 import com.jacobbieker.exoplanets.beans.System;
-import com.jacobbieker.exoplanets.database.GitHubHeadless;
 import com.orm.Database;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -88,7 +87,7 @@ public class DatabaseXMLparser {
     private Star currentStar;
     //Process System tags in the file
     private List readSystems(XmlPullParser parser) throws XmlPullParserException, IOException {
-        parser.require(XmlPullParser.START_TAG, ns, "system");
+        parser.require(XmlPullParser.START_TAG, ns, "name");
         List binary = null;
         List star = null;
         List planet = null;

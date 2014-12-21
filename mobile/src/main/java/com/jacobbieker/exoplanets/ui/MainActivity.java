@@ -35,8 +35,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.jacobbieker.exoplanets.R;
-import com.jacobbieker.exoplanets.database.GitHubHeadless;
-import com.jacobbieker.exoplanets.database.GitHub_Service;
 import com.jacobbieker.exoplanets.eventbus.ItemSelectedEvent;
 import com.jacobbieker.exoplanets.settings.SettingsActivity;
 import com.jacobbieker.exoplanets.xml.JsonPullerService;
