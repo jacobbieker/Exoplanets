@@ -39,6 +39,7 @@ import com.jacobbieker.exoplanets.database.GitHubHeadless;
 import com.jacobbieker.exoplanets.database.GitHub_Service;
 import com.jacobbieker.exoplanets.eventbus.ItemSelectedEvent;
 import com.jacobbieker.exoplanets.settings.SettingsActivity;
+import com.jacobbieker.exoplanets.xml.JsonPullerService;
 
 import de.greenrobot.event.EventBus;
 
@@ -58,11 +59,11 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
 
 
-        String gitHubURL = "https://github.com/OpenExoplanetCatalogue/oec_gzip/raw/master/systems.xml.gz";//Change if URL changes to download thing
+        String gitHubURL = "https://api.github.com/repos/OpenExoplanetCatalogue/open_exoplanet_catalogue/contents/systems?ref=master";//Change if URL changes to download thing
         //Start Service using Intent
         //TODO Make Sure This Is Right
         Log.i("GitHubService", "Intent About to be Passed");
-        Intent gitHubDownload = new Intent(getBaseContext(), GitHub_Service.class);
+        Intent gitHubDownload = new Intent(getBaseContext(), JsonPullerService.class);
         gitHubDownload.putExtra("URL1", gitHubURL);
         getBaseContext().startService(gitHubDownload);
         Log.i("GitHubService", "Intent About Passed");

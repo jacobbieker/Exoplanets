@@ -33,6 +33,9 @@
             android:name=".database.GitHub_Service"
             android:exported="false"/>
 
+        <service android:name=".xml.JsonPullerService"
+                 android:exported="false" />
+
         <meta-data android:name="DATABASE" android:value="exoplanets.db" />
         <meta-data android:name="VERSION" android:value="2" />
         <meta-data android:name="QUERY_LOG" android:value="true" />

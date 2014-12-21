@@ -56,6 +56,10 @@ public class JsonPullerService extends IntentService {
         super("JsonPullerService");
     }
 
+    public JsonPullerService(String name) {
+        super(name);
+    }
+
 
     @Override
     protected void onHandleIntent(Intent intent) {
