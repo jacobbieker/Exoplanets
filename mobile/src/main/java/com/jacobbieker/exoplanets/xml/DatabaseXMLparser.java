@@ -96,7 +96,9 @@ public class DatabaseXMLparser {
             continue;
         }
         String entry = parser.getName();
-        if (entry.equals(NAME)) {
+        if (parser.getText() == null) {
+            skip(parser);
+        } else if (entry.equals(NAME)) {
             system.systemName = parser.getText();
             system.save();
         } else if (entry.equals(RIGHTASCENSION)) {
