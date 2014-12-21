@@ -56,7 +56,6 @@ public class DatabaseXMLparser {
     private static final String DISTANCE = "distance";
     private static final String STAR = "star";
     private static final String PLANET = "planet";
-    //File databaseXML = new File(DatabaseStrings.ASSETS_SYSTEMS_XML);
     private Context context;
 
     public List parse(InputStream is) throws XmlPullParserException, IOException {
@@ -74,17 +73,12 @@ public class DatabaseXMLparser {
     private List readDatabase(XmlPullParser parser) throws XmlPullParserException, IOException {
         ArrayList systems = new ArrayList();
 
-        parser.require(XmlPullParser.START_TAG, ns, "systems");
+        parser.require(XmlPullParser.START_TAG, ns, "system");
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
                 continue;
             }
-            String name = parser.getName();
-            if (name.equals("system")) {
-                systems.add(readSystems(parser));
-            } else {
-                skip(parser);
-            }
+            systems.add(readSystems(parser));
         }
         return systems;
     }

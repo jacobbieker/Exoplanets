@@ -73,6 +73,7 @@ public class JsonPullerService extends IntentService {
             ArrayList<JsonSystem> systemsUrls = readJsonStream(stream);//Gets the URLs of all the files
 
             for (int i = 0; i < systemsUrls.size(); i++) {//Goes through ArrayList
+
                 //Connect to each URL
                 URL systemUrl = new URL(systemsUrls.get(i).getUrl());
                 URLConnection urlConnection = systemUrl.openConnection();
@@ -100,6 +101,7 @@ public class JsonPullerService extends IntentService {
                 DatabaseXMLparser databaseXMLparser = new DatabaseXMLparser();
                 databaseXMLparser.parse(fileInputStream);
                 fileInputStream.close();//End of reading file sequence
+                file.delete();//deletes files so it does not take up space, and for next time Intent runs, file is not there
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();
