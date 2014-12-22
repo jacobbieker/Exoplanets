@@ -81,7 +81,7 @@ public class JsonPullerService extends IntentService {
                 InputStream urlInput = new BufferedInputStream(inputSource.getByteStream());
                 FileOutputStream outputStream = openFileOutput(systemsUrls.get(i).getName(), Context.MODE_PRIVATE);
                 //Log.i("JsonPullerService", "File created at: " + getFilesDir());
-                byte data[] = new byte[10971520];
+                byte data[] = new byte[2971520];
                 long total = 0;
                 int count;
 

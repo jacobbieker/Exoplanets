@@ -60,23 +60,10 @@ public class DatabaseXMLparser {
             XmlPullParser parser = factory.newPullParser();
             parser.setInput(is, ns);
             parser.nextTag();
-            return readDatabase(parser);
+            return readSystems(parser);
         } finally {
             is.close();
         }
-    }
-
-    private List readDatabase(XmlPullParser parser) throws XmlPullParserException, IOException {
-        ArrayList systems = new ArrayList();
-
-        parser.require(XmlPullParser.START_TAG, ns, "system");
-        while (parser.next() != XmlPullParser.END_TAG) {
-            if (parser.getEventType() != XmlPullParser.START_TAG) {
-                continue;
-            }
-            systems.add(readSystems(parser));
-        }
-        return systems;
     }
 
 
@@ -84,7 +71,7 @@ public class DatabaseXMLparser {
     private Star currentStar;
     //Process System tags in the file
     private List readSystems(XmlPullParser parser) throws XmlPullParserException, IOException {
-        parser.require(XmlPullParser.START_TAG, ns, "name");
+        parser.require(XmlPullParser.START_TAG, ns, "system");
         List binary = null;
         List star = null;
         List planet = null;
