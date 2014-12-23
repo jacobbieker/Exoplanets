@@ -82,16 +82,16 @@ public class DatabaseXMLparser {
         String entry = parser.getName();
         if (entry.equals(NAME)) {
             system.systemName = parser.getText();
-            system.save();
+            //system.save();
         } else if (entry.equals(RIGHTASCENSION)) {
             system.rightAscension = parser.getText();
-            system.save();
+            //system.save();
         } else if (entry.equals(DECLINATION)) {
             system.declination = parser.getText();
-            system.save();
+            //system.save();
         } else if (entry.equals(DISTANCE)) {
             system.distance = parser.getText();
-            system.save();
+            //system.save();
             currentSystem = system; //Only works if Distance is always last before Star
         } else if (entry.equals(BINARY)) {
             binary = readBinary(parser);
